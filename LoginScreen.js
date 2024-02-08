@@ -1,9 +1,59 @@
 // Login screen
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, TextInput, Button, StyleSheet, Alert } from 'react-native';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
+  const [login_type, setlogin_type] = useState(0);
+  const [errors, seterrors] = useState('');
+  const [data, setData] =useState([]);
+
+
+//   Method:- POST
+
+// body:-
+
+// {
+//    "Email": "ajit4gvm@gmail.com",
+//    "Login_type": "0"
+// }
+const customerData = {
+    Email: email,
+    Login_type: login_type
+
+}
+
+   
+
+  const fetchRegisterData = async()=>{
+    try{
+      const response = await fetch("https://api-coolbro.gvmtechnologies.com/auth/send_otp",
+      method = post,
+      body = customerData,
+
+      
+      )
+      const result = await response.json()
+      setData(data)
+
+
+    }catch (error){
+      console.log(" Error in fetch the data")
+    }
+    
+
+  }
+
+  useEffect(()=>{
+    fetchRegisterData()
+  },[])
+
+
+   if(errors){
+    seterrors("error in fetch the register data")
+      
+   }
+
 
   const handleLogin = () => {
     // Send POST request with email and login type
